@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-user"></i>
+                        <span> {{user.name}}</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a routerLink='' (click)='logout()' class="dropdown-item">Odjavi se</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>

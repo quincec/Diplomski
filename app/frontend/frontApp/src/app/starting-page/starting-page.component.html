@@ -1,0 +1,41 @@
+<form>
+    <div class="simple-login-container">
+        <h2>PRIJAVA</h2>
+        <br>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="username">Korisničko ime:</label>
+                <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username">
+                <div class="message">
+                    {{messageUsername}}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="password">Lozinka:</label>
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password">
+                <div class="message">
+                    {{messagePassword}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <button class="btn btn-block btn-login" (click)='login()'>PRIJAVA</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group" style="text-align:center">
+                NOVI KORISNIK?
+                <button class="btn btn-block btn-register" [routerLink]="['register']">REGISTRUJTE SE</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group" style="text-align:center">
+                <a [routerLink]="['home']">Nastavi kao gost</a>
+            </div>
+        </div>
+    </div>
+</form>
