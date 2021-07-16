@@ -21,4 +21,8 @@ export class NavbarUserComponent implements OnInit {
     this.router.navigate(['/starting-page']);
   }
 
+  search() {
+    
+  }
+
 }

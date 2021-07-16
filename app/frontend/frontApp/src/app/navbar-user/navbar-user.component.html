@@ -1,14 +1,30 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-warning">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" routerLink='/home'>Početna<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/wishlist'>Wish list</a>
+                </li>
+                <li class="nav-item">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Pretraži" aria-label="Search">
+                        <button class="btn btn-dark" (click)='search()'><i class="fa fa-search"></i></button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/bag'>Korpa</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <i class="fas fa-user"></i>
                         <span> {{user.name}}</span>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Inbox</a>
+                        <a routerLink='/profile' class="dropdown-item">Moj profil</a>
+                        <a routerLink='/orders' class="dropdown-item">Moje porudžbine</a>
                         <div class="dropdown-divider"></div>
                         <a routerLink='' (click)='logout()' class="dropdown-item">Odjavi se</a>
                     </div>
@@ -16,4 +32,4 @@
             </ul>
         </div>
     </div>
-  </nav>
+</nav>
