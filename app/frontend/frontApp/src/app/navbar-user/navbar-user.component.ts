@@ -10,10 +10,10 @@ export class NavbarUserComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  user: any;
+  currentUser: any;
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('korisnik'));
+    this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
   }
 
   logout() {
@@ -22,7 +22,7 @@ export class NavbarUserComponent implements OnInit {
   }
 
   search() {
-    
+
   }
 
 }

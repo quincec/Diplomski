@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private router: Router, private userService: UsersService) { }
 
+  currentUser: any;
   
   name: String;
   surname: String;
@@ -33,6 +34,10 @@ export class RegisterComponent implements OnInit {
   messageEmail: String = '';
 
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
+    if (this.currentUser != null) {
+        this.router.navigate(['/home']);
+    }
   }
 
   checkIfPasswordContainsNumber(password): any{

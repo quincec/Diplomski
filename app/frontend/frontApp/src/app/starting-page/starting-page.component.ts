@@ -11,6 +11,8 @@ export class StartingPageComponent implements OnInit {
 
   constructor(private router: Router, private userService: UsersService) { }
 
+  currentUser: any;
+
   username: String;
   password: String;
 
@@ -18,6 +20,10 @@ export class StartingPageComponent implements OnInit {
   messagePassword: String;
 
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
+    if (this.currentUser != null) {
+        this.router.navigate(['/home']);
+    }
   }
 
   login(){

@@ -12,4 +12,7 @@ export class NavbarGuestComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  search() {
+    
+  }
 }
