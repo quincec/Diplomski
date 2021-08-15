@@ -40,4 +40,16 @@ export class UsersService {
     };
     return this.http.post(`${this.uri}/createNewRequest`, data);
   }
+
+  saveProfileChanges(username, name, surname, phone, address, city){
+    const data = {
+      username: username,
+      name: name,
+      surname: surname,
+      phone: phone,
+      address: address,
+      city: city
+    };
+    return this.http.post(`${this.uri}/saveProfileChanges`, data);
+  }
 }

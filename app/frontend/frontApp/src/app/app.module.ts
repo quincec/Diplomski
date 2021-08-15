@@ -22,6 +22,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { BagComponent } from './bag/bag.component';
 import { RequestsComponent } from './requests/requests.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RequestsComponent } from './requests/requests.component';
     NavbarComponent,
     WishlistComponent,
     BagComponent,
-    RequestsComponent
+    RequestsComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

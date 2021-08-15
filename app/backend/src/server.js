@@ -77,6 +77,19 @@ app.post('/createNewRequest', async (req, res, next) => {
   res.json(request);
 })
 
+app.post('/saveProfileChanges', async (req, res, next) => {
+  let username = req.body.username;
+  let name = req.body.name;
+  let surname = req.body.surname;
+  let address = req.body.address;
+  let city = req.body.city;
+  let phone = req.body.phone;
+
+  const changedUser = await UserModel.findOneAndUpdate({'username': username}, {'name': name, 'surname': surname, 'address': address, 
+                                                                          'city': city, 'phone': phone}, {new: true});
+  return res.json(changedUser);
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
