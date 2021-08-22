@@ -115,12 +115,10 @@ export class RegisterComponent implements OnInit {
 
     //provera da li je korisnicko ime i e-mail jedinstveni u sistemu
     this.userService.areUsernameAndEmailUnique(this.username, this.email).subscribe((response: any) => {
-      if (response){
+      if (response.message != "Slobodno.") {
         this.messageUsername = response.messageUsername;
         this.messageEmail = response.messageEmail;
       }
-
-      //TODO: provera da li je email vec u uppotrebi
         
       //provera da li je lozinka odgovarajuceg oblika
       let resultCheck = this.checkPassword(this.password);
@@ -140,7 +138,9 @@ export class RegisterComponent implements OnInit {
       }
 
       if (this.messageUsername != "" || this.messageSurname != "" || this.messagePhone != "" || this.messagePassword != "" ||
-        this.messageName != "" || this.messageEmail != "" || this.messageCity != "" || this.messageAddress != "") return;
+        this.messageName != "" || this.messageEmail != "" || this.messageCity != "" || this.messageAddress != "") {
+          return;
+        }
 
       //napravi novi zahtev za registraciju
       this.userService.createNewRequest(this.name, this.surname, this.username, this.password, this.phone, this.email, this.address, this.city).subscribe((u : User) => {

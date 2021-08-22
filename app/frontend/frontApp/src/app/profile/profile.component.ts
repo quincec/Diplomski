@@ -50,6 +50,7 @@ export class ProfileComponent implements OnInit {
  }
 
   saveChanges() {
+    window.scroll(0,0);
     //setujem sve poruke na ""
     this.messageName = ""; this.messageSurname = ""; this.messageAddress = ""; this.messageCity = ""; this.messagePhone = "";
 
@@ -79,12 +80,16 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.messageSurname != "" || this.messagePhone != "" ||
-      this.messageName != "" || this.messageCity != "" || this.messageAddress != "") return;
+      this.messageName != "" || this.messageCity != "" || this.messageAddress != "") {
+        return;
+      }
 
     //napravi novi zahtev za registraciju
     this.userService.saveProfileChanges(this.currentUser.username, this.name, this.surname, this.phone, this.address, this.city).subscribe((u : User) => {
       window.alert("Promene su uspešno sačuvane!");
       this.currentUser = u;
+      localStorage.removeItem('korisnik');
+      localStorage.setItem('korisnik', JSON.stringify(this.currentUser));
       this.router.navigate(['/profile']);
     })
   }

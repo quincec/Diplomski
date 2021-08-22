@@ -1,0 +1,46 @@
+.responsive {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+#wishlist {
+    width: 20%;
+    margin: 4%;
+}
+
+.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+
+.card {
+    padding-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+
+.col-12 {
+    padding-right: 7%;
+}
+
+table {
+    margin: 5%;
+}
+
+.btn-login{
+    background-color:rgb(238, 73, 23);
+    color:#fff;
+}
+
+.simple-login-container{
+    width:300px;
+    max-width:100%;
+    margin:50px auto;
+}
+.simple-login-container h2{
+    text-align:center;
+    font-size:20px;
+}
