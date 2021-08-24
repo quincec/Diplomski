@@ -23,6 +23,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { BagComponent } from './bag/bag.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     WishlistComponent,
     BagComponent,
     RequestsComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

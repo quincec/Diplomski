@@ -13,12 +13,81 @@ export class BagComponent implements OnInit {
   constructor(private router: Router, private userService: UsersService) { }
 
   currentUser: any;
+  bag: any;
+  books: any = [];
+  totalPrice: any;
+
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
     if (this.currentUser != null && this.currentUser.type == "admin") {
         this.router.navigate(['/home']);
     }
+    this.bag = JSON.parse(localStorage.getItem('bag'));
+    if (this.bag != null) {
+      this.books = this.bag.books;
+      this.totalPrice = this.bag.price;
+    }
+  }
+
+  convertToFloat(numToConvert: String): any {
+    let num = new String(numToConvert);
+    if (num.includes(".")) {
+      let temp = num.split(".");
+      num = "";
+      for (let j = 0; j < temp.length; j++) {
+        num += temp[j];
+      }
+    }
+    num.replace(",", ".");
+    let retValue = num.toString();
+    return parseFloat(retValue);
+  }
+
+  removeFromBag(b: any) {
+    let currentBag = this.bag;
+    let books = currentBag.books;
+    let index = 0;
+
+    for (let i = 0; i < books.length; i++) {
+      if (books[i].link == b.link) {
+        index = i;
+        break;
+      }
+    }
+
+    let removedBook = books.splice(index, 1);
+
+    if (books.length == 0) {
+      this.bag = null;
+      this.books = null;
+      localStorage.removeItem('bag');
+      return;
+    }
+
+    this.bag.books = books;
+    let currentPrice = this.convertToFloat(this.totalPrice);
+    currentPrice -= this.convertToFloat(removedBook[0].price) * this.convertToFloat(removedBook[0].quantity);
+    this.totalPrice  = currentPrice.toString();
+    this.bag.price = this.totalPrice;
+    this.books = books;
+    localStorage.removeItem('bag');
+    localStorage.setItem('bag', JSON.stringify(this.bag));
+  }
+
+  order() {
+    this.userService.order(this.bag.books, this.currentUser._id, this.bag.price, this.currentUser.name, this.currentUser.surname,
+      this.currentUser.address, this.currentUser.city, this.currentUser.phone).subscribe((o: any) => {
+        if (o != null) {
+          localStorage.removeItem('bag');
+          this.bag = null;
+          this.books = null;
+          window.alert("Narudžbina uspešna!");
+          this.router.navigate(['/home']);
+        } else {
+          window.alert("Pokušajte ponovo!");
+        }
+      })
   }
 
 }

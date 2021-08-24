@@ -10,6 +10,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { BagComponent } from './bag/bag.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {path: '', component: StartingPageComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'bag', component: BagComponent},
   {path: 'requests', component: RequestsComponent},
   {path: 'changePassword', component: ChangePasswordComponent},
+  {path: 'search', component: SearchComponent},
 ];
 
 @NgModule({

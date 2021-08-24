@@ -7,30 +7,32 @@ import { Book } from '../book.model';
 import { Wishlist } from '../wishlist.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SearchComponent implements OnInit {
 
   constructor(private router: Router, private userService: UsersService) { }
 
   type: String;
   currentUser: any;
+  keyword: String;
   
-  books: any;
+  books: any = [];
   sortCategory: any;
   myWishlist: Wishlist[];
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
+    this.keyword = localStorage.getItem('keyword');
     if (this.currentUser != null) {
       this.type = this.currentUser.type;
     } else {
       this.type = "guest";
     }
 
-    this.userService.getAllBooks().subscribe((b: any) => {
+    this.userService.searchBooks(this.keyword).subscribe((b: any) => {
       this.books = b;
       if (this.type == 'user') {
         this.userService.getMyWishlist(this.currentUser._id).subscribe((w: Wishlist[]) => {
@@ -103,26 +105,28 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  convertToFloat(numToConvert: String): any {
-    let num = new String(numToConvert);
-    if (num.includes(".")) {
-      let temp = num.split(".");
-      num = "";
+  calculateTotalPrice(myBag, b) : any {
+    let totalPrice = myBag.price;
+    if (totalPrice.includes(".")) {
+      let temp = totalPrice.split(".");
+      totalPrice = "";
       for (let j = 0; j < temp.length; j++) {
-        num += temp[j];
+        totalPrice += temp[j];
       }
     }
-    num.replace(",", ".");
-    let retValue = num.toString();
-    return parseFloat(retValue);
-  }
+    totalPrice.replace(",", ".");
 
-  calculateTotalPrice(myBag, b) : any {
-    let totalPriceFloat = this.convertToFloat(myBag.price);
-    let bookPriceFloat = this.convertToFloat(b.price);
-    let totalPrice = 0;
-    totalPrice += bookPriceFloat + totalPriceFloat;
-    return myBag.price = totalPrice.toString();
+    if (b.price.includes(".")) {
+      let temp = b.price.split(".");
+      b.price = "";
+      for (let j = 0; j < temp.length; j++) {
+        b.price += temp[j];
+      }
+    }
+    b.price.replace(",", ".");
+    let totPrice = 0;
+    totPrice += parseFloat(b.price) + parseFloat(totalPrice);
+    return myBag.price = totPrice.toString();
   }
 
   addToBag(b: any) {
@@ -137,7 +141,6 @@ export class HomeComponent implements OnInit {
           let totalPrice = this.calculateTotalPrice(myBag, b);
           myBag.price = totalPrice;
           localStorage.setItem('bag', JSON.stringify(myBag));
-          window.alert('Uspešno ste dodali ' + b.title + ' u korpu!');
           return;
         }
       }

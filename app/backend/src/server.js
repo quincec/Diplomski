@@ -13,6 +13,7 @@ const { UserModel } = require('./models/userModel.js');
 const { RequestModel } = require('./models/requestModel.js');
 const { BookModel } = require('./models/bookModel.js');
 const { WishlistModel } = require('./models/wishlistModel.js');
+const { OrderModel } = require('./models/orderModel.js');
 
 const { SendmailTransport } = require('nodemailer/lib/sendmail-transport');
 const { defaultMaxListeners } = require('nodemailer/lib/mailer');
@@ -290,6 +291,29 @@ app.get('/getMyWishlist/:userId', async(req, res, next) => {
   let userId = req.params.userId;
   const wishlist = await WishlistModel.find({'userId': userId});
   res.json(wishlist);
+})
+
+app.get('/searchBooks/:keyword', async(req, res, next) => {
+  const regex = new RegExp(req.params.keyword, 'i')
+
+  const books = await BookModel.find({$or:[{'title': {$regex: regex}}, {'bookstore': {$regex: regex}}, {'author': {$regex: regex}}]});
+  res.json(books);
+})
+
+app.post('/order', async (req, res, next) => {
+  let order = new OrderModel({
+      books: req.body.books,
+      userId: req.body.userId,
+      price: req.body.price,
+      name: req.body.name,
+      surname: req.body.surname,
+      address: req.body.address,
+      city: req.body.city,
+      phone: req.body.phone
+  });
+
+  order.save();
+  res.json(order);
 })
 
 app.listen(port, () => {

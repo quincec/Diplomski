@@ -7,7 +7,7 @@
                 </li>
                 <li class="nav-item">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Pretraži" aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Pretraži" aria-label="Search"  [(ngModel)]='searchBy' type='text' name='searchBy'>
                         <button class="btn btn-dark" (click)='search()'><i class="fa fa-search"></i></button>
                     </form>
                 </li>

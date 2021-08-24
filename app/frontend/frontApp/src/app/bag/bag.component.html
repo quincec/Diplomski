@@ -1,2 +1,40 @@
 <app-navbar></app-navbar>
-<p>bag works!</p>
+<div class="simple-login-container">
+    <h2>Korpa</h2>
+</div>
+<div class="table-responsive-md" *ngIf='bag!=null'>
+    <table class="table">
+        <thead class="thead">
+        <tr>
+            <th scope="col">Naziv</th>
+            <th scope="col">Autori</th>
+            <th scope="col">Količina</th>
+            <th scope="col">Cena</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor='let b of books'>
+            <td>{{b.title}}</td>
+            <td>{{b.author}}</td>
+            <td>{{b.quantity}}</td>
+            <td>{{b.price}}</td>
+            <td>
+                <button class='btn btn-danger' (click)='removeFromBag(b)'>Izbaci</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<div *ngIf='bag!=null' style='text-align: center;'><b>Ukupno: {{totalPrice}} RSD</b></div>
+<br>
+<div class="simple-login-container" *ngIf='bag!=null'>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <button class="btn btn-block btn-login" (click)='order()'>Naruči</button>
+        </div>
+    </div>
+</div>
+<div *ngIf='bag==null' style='text-align: center;'>Nemate knjige u korpi.</div>
+<br><br>
+

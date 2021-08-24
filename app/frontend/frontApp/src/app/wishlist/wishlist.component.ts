@@ -17,7 +17,7 @@ export class WishlistComponent implements OnInit {
 
   currentUser: any;
 
-  myWishlist: Wishlist[];
+  myWishlist: Wishlist[] = [];
   wishlistExists: Boolean = false;
 
   ngOnInit(): void {
@@ -46,6 +46,73 @@ export class WishlistComponent implements OnInit {
       this.wishlistExists = false;
       this.myWishlist = list;
     })
+  }
+
+  calculateTotalPrice(myBag, b) : any {
+    let totalPrice = myBag.price;
+    if (totalPrice.includes(".")) {
+      let temp = totalPrice.split(".");
+      totalPrice = "";
+      for (let j = 0; j < temp.length; j++) {
+        totalPrice += temp[j];
+      }
+    }
+    totalPrice.replace(",", ".");
+
+    if (b.price.includes(".")) {
+      let temp = b.price.split(".");
+      b.price = "";
+      for (let j = 0; j < temp.length; j++) {
+        b.price += temp[j];
+      }
+    }
+    b.price.replace(",", ".");
+    let totPrice = 0;
+    totPrice += parseFloat(b.price) + parseFloat(totalPrice);
+    return myBag.price = totPrice.toString();
+  }
+
+  addToBag(b: any) {
+    let myBag = JSON.parse(localStorage.getItem('bag'));
+    if (myBag != null) {
+      localStorage.removeItem('myBag');
+      let books = myBag.books;
+      for (let i = 0; i < books.length; i++) {
+        if (books[i].title == b.title && books[i].link == b.link) {
+          books[i].quantity += 1;
+          myBag.books = books;
+          let totalPrice = this.calculateTotalPrice(myBag, b);
+          myBag.price = totalPrice;
+          localStorage.setItem('bag', JSON.stringify(myBag));
+          return;
+        }
+      }
+      const obj = {
+        title: b.title,
+        link: b.link,
+        price: b.price,
+        quantity: 1,
+        author: b.author
+      };
+      books.push(obj);
+      let totalPrice = this.calculateTotalPrice(myBag, b);
+      myBag.price = totalPrice;
+    } else {
+      //prva stvar se dodaje u korpu
+      const bag = {
+        books : [{
+          title: b.title,
+          link: b.link,
+          price: b.price,
+          quantity: 1,
+          author: b.author
+        }],
+        price: b.price
+      };
+      myBag = bag;
+    }
+    localStorage.setItem('bag', JSON.stringify(myBag));
+    window.alert('Uspešno ste dodali ' + b.title + ' u korpu!');
   }
 
 }

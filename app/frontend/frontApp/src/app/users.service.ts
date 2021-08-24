@@ -117,4 +117,22 @@ export class UsersService {
   getMyWishlist(userId): any {
     return this.http.get(`${this.uri}/getMyWishlist/${userId}`);
   }
+
+  searchBooks(keyword): any {
+    return this.http.get(`${this.uri}/searchBooks/${keyword}`);
+  }
+
+  order(books, userId, price, name, surname, address, city, phone) {
+    const data = {
+      books: books,
+      userId: userId, 
+      price: price,
+      name: name,
+      surname: surname,
+      address: address,
+      city: city,
+      phone: phone
+    };
+    return this.http.post(`${this.uri}/order`, data);
+  }
 }

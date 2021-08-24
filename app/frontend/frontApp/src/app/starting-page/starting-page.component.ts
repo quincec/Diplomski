@@ -51,6 +51,7 @@ export class StartingPageComponent implements OnInit {
         }
         //sigurno postoji odgovarajuci korisnik
         localStorage.setItem('korisnik', JSON.stringify(response));
+        localStorage.removeItem('bag');
         this.router.navigate(['/home']);
       });
     }
