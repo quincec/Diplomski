@@ -24,6 +24,7 @@ import { BagComponent } from './bag/bag.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { SearchComponent } from './search/search.component';
+import { GuestInfoComponent } from './guest-info/guest-info.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SearchComponent } from './search/search.component';
     RequestsComponent,
     ChangePasswordComponent,
     SearchComponent,
+    GuestInfoComponent,
   ],
   imports: [
     BrowserModule,

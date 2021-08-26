@@ -28,6 +28,9 @@ export class SearchComponent implements OnInit {
     this.keyword = localStorage.getItem('keyword');
     if (this.currentUser != null) {
       this.type = this.currentUser.type;
+      if (this.type == "admin") {
+        this.router.navigate(['/requests']);
+      }
     } else {
       this.type = "guest";
     }

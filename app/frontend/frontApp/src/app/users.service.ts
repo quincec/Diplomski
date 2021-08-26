@@ -135,4 +135,8 @@ export class UsersService {
     };
     return this.http.post(`${this.uri}/order`, data);
   }
+
+  getMyOrders(userId): any {
+    return this.http.get(`${this.uri}/getMyOrders/${userId}`);
+  }
 }

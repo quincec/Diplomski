@@ -36,7 +36,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
     if (this.currentUser != null) {
+      if (this.currentUser.type == "user") {
         this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/requests']);
+      }
     }
   }
 

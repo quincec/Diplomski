@@ -316,6 +316,12 @@ app.post('/order', async (req, res, next) => {
   res.json(order);
 })
 
+app.get('/getMyOrders/:userId', async(req, res, next) => {
+  let userId = req.params.userId;
+  const orders = await OrderModel.find({'userId': userId});
+  res.json(orders);
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

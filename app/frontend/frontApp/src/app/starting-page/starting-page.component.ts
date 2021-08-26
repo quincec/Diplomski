@@ -22,7 +22,11 @@ export class StartingPageComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
     if (this.currentUser != null) {
+      if (this.currentUser.type == "user") {
         this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/requests']);
+      }
     }
   }
 
@@ -52,6 +56,9 @@ export class StartingPageComponent implements OnInit {
         //sigurno postoji odgovarajuci korisnik
         localStorage.setItem('korisnik', JSON.stringify(response));
         localStorage.removeItem('bag');
+        if (this.username == "admin") {
+          this.router.navigate(['/requests']);
+        }
         this.router.navigate(['/home']);
       });
     }

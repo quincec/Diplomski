@@ -26,6 +26,9 @@ export class HomeComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
     if (this.currentUser != null) {
       this.type = this.currentUser.type;
+      if (this.type == "admin") {
+        this.router.navigate(['/requests']);
+      }
     } else {
       this.type = "guest";
     }

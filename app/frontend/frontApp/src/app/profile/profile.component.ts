@@ -32,8 +32,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
-    if (this.currentUser == null || (this.currentUser != null && this.currentUser.type == "admin")) {
-        this.router.navigate(['/home']);
+    if (this.currentUser == null) {
+      this.router.navigate(['/home']);
+    }
+    if (this.currentUser != null && this.currentUser.type == "admin") {
+      this.router.navigate(['/requests']);
     }
     this.name = this.currentUser.name;
     this.surname = this.currentUser.surname;

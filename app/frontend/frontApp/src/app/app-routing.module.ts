@@ -11,6 +11,7 @@ import { BagComponent } from './bag/bag.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { SearchComponent } from './search/search.component';
+import { GuestInfoComponent } from './guest-info/guest-info.component';
 
 const routes: Routes = [
   {path: '', component: StartingPageComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'requests', component: RequestsComponent},
   {path: 'changePassword', component: ChangePasswordComponent},
   {path: 'search', component: SearchComponent},
+  {path: 'info', component: GuestInfoComponent},
 ];
 
 @NgModule({

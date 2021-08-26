@@ -1,0 +1,55 @@
+<app-navbar-guest></app-navbar-guest>
+<form>
+    <div class="simple-login-container">
+        <h2>Unesi podatke</h2>
+        <br>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="name">Ime:</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="name">
+                <div class="message">
+                    {{messageName}}
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="surname">Prezime:</label>
+                <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="surname">
+                <div class="message">
+                    {{messageSurname}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="address">Adresa prebivališta:</label>
+                <input type="text" class="form-control" id="address" name="address" [(ngModel)]="address">
+                <div class="message">
+                    {{messageAddress}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="city">Grad:</label>
+                <input type="text" class="form-control" id="city" name="city" [(ngModel)]="city">
+                <div class="message">
+                    {{messageCity}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="phone">Telefon:</label>
+                <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="phone">
+                <div class="message">
+                    {{messagePhone}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <button class="btn btn-block btn-login" (click)='order()'>Ostavi podatke i naruči</button>
+            </div>
+        </div>
+    </div>
+</form>

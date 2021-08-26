@@ -22,8 +22,11 @@ export class WishlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
-    if (this.currentUser == null || (this.currentUser != null && this.currentUser.type == "admin")) {
+    if (this.currentUser == null) {
         this.router.navigate(['/home']);
+    } 
+    if (this.currentUser != null && this.currentUser.type == "admin") {
+      this.router.navigate(['/requests']);
     }
 
     this.userService.getMyWishlist(this.currentUser._id).subscribe((w: Wishlist[]) => {

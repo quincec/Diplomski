@@ -1,2 +1,34 @@
-<app-navbar></app-navbar>
-<p>orders works!</p>
+<app-navbar-user></app-navbar-user>
+<div class="simple-login-container">
+    <h2>Moje porudžbine</h2>
+</div>
+    <div class="table-responsive-md center" *ngIf='orders!=null'>
+        <div class="col-md-8 form-group center" *ngFor='let ord of orders' >
+            <div class='card text-center'>
+                <div class="table-responsive-md">
+                    <table class="table">
+                        <thead class="thead">
+                        <tr *ngIf='ord.books'>
+                            <th scope="col">Naziv</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Količina</th>
+                            <th scope="col">Cena</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor='let b of ord.books'>
+                            <td>{{b.title}}</td>
+                            <td>{{b.author}}</td>
+                            <td>{{b.quantity}}</td>
+                            <td>{{b.price}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <label><b>{{ord.price}} RSD</b></label>
+            </div>
+        </div>
+<div *ngIf='orders==null' style='text-align: center;'>Nemate prethodne porudžbine.</div>
+<br><br>
+

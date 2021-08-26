@@ -21,7 +21,7 @@ export class BagComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('korisnik'));
     if (this.currentUser != null && this.currentUser.type == "admin") {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/requests']);
     }
     this.bag = JSON.parse(localStorage.getItem('bag'));
     if (this.bag != null) {
@@ -76,18 +76,23 @@ export class BagComponent implements OnInit {
   }
 
   order() {
-    this.userService.order(this.bag.books, this.currentUser._id, this.bag.price, this.currentUser.name, this.currentUser.surname,
-      this.currentUser.address, this.currentUser.city, this.currentUser.phone).subscribe((o: any) => {
-        if (o != null) {
-          localStorage.removeItem('bag');
-          this.bag = null;
-          this.books = null;
-          window.alert("Narudžbina uspešna!");
-          this.router.navigate(['/home']);
-        } else {
-          window.alert("Pokušajte ponovo!");
-        }
-      })
+    if (this.currentUser != null) {
+      this.userService.order(this.bag.books, this.currentUser._id, this.bag.price, this.currentUser.name, this.currentUser.surname,
+        this.currentUser.address, this.currentUser.city, this.currentUser.phone).subscribe((o: any) => {
+          if (o != null) {
+            localStorage.removeItem('bag');
+            this.bag = null;
+            this.books = null;
+            window.alert("Narudžbina uspešna!");
+            this.router.navigate(['/home']);
+          } else {
+            window.alert("Pokušajte ponovo!");
+          }
+        })
+    } else {
+      window.alert("Morate uneti podatke o sebi!");
+      this.router.navigate(['/info']);
+    }
   }
 
 }
