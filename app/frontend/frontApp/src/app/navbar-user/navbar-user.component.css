@@ -1,8 +1,13 @@
+
 a {
-    color: black;
+  color: black;
 }
 
 .navbar-custom {
-    background-color:rgb(238, 73, 23);
-    color:#fff;
+  background-color:rgb(238, 73, 23);
+  color:#fff;
+}
+
+.navbar a:hover {
+  background-color:rgb(255, 210, 70);
 }
