@@ -39,9 +39,10 @@ export class BagComponent implements OnInit {
         num += temp[j];
       }
     }
-    num.replace(",", ".");
-    let retValue = num.toString();
-    return parseFloat(retValue);
+    let temp = num.split(",");
+    let retValue = temp[0] + "." + temp[1];
+    let floatValue = parseFloat(retValue);
+    return floatValue;
   }
 
   removeFromBag(b: any) {
@@ -66,9 +67,9 @@ export class BagComponent implements OnInit {
     }
 
     this.bag.books = books;
-    let currentPrice = this.convertToFloat(this.totalPrice);
+    let currentPrice = parseFloat(this.totalPrice);
     currentPrice -= this.convertToFloat(removedBook[0].price) * this.convertToFloat(removedBook[0].quantity);
-    this.totalPrice  = currentPrice.toString();
+    this.totalPrice  = currentPrice.toFixed(2);
     this.bag.price = this.totalPrice;
     this.books = books;
     localStorage.removeItem('bag');

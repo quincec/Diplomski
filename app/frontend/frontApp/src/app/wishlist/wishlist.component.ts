@@ -51,34 +51,40 @@ export class WishlistComponent implements OnInit {
     })
   }
 
-  calculateTotalPrice(myBag, b) : any {
-    let totalPrice = myBag.price;
-    if (totalPrice.includes(".")) {
-      let temp = totalPrice.split(".");
-      totalPrice = "";
-      for (let j = 0; j < temp.length; j++) {
-        totalPrice += temp[j];
-      }
-    }
-    totalPrice.replace(",", ".");
+  getStringPrice(p: any): any {
+    let price = p.replace(/\s+/g, '');
+    return price;
+  }
 
-    if (b.price.includes(".")) {
-      let temp = b.price.split(".");
-      b.price = "";
+  convertToFloat(numToConvert: String): any {
+    let num = new String(numToConvert);
+    if (num.includes(".")) {
+      let temp = num.split(".");
+      num = "";
       for (let j = 0; j < temp.length; j++) {
-        b.price += temp[j];
+        num += temp[j];
       }
     }
-    b.price.replace(",", ".");
-    let totPrice = 0;
-    totPrice += parseFloat(b.price) + parseFloat(totalPrice);
-    return myBag.price = totPrice.toString();
+    let temp = num.split(",");
+    let retValue = temp[0] + "." + temp[1];
+    let floatValue = parseFloat(retValue);
+    return floatValue;
+  }
+
+  calculateTotalPrice(myBag, b) : any {
+    let totalPriceFloat = parseFloat(myBag.price);
+    let bookPriceFloat = this.convertToFloat(b.price);
+    let totalPrice = 0;
+    totalPrice = bookPriceFloat + totalPriceFloat;
+    return myBag.price = totalPrice.toFixed(2);
   }
 
   addToBag(b: any) {
     let myBag = JSON.parse(localStorage.getItem('bag'));
+    let pr = b.price;
+    b.price = this.getStringPrice(pr);
     if (myBag != null) {
-      localStorage.removeItem('myBag');
+      localStorage.removeItem('bag');
       let books = myBag.books;
       for (let i = 0; i < books.length; i++) {
         if (books[i].title == b.title && books[i].link == b.link) {
@@ -87,6 +93,7 @@ export class WishlistComponent implements OnInit {
           let totalPrice = this.calculateTotalPrice(myBag, b);
           myBag.price = totalPrice;
           localStorage.setItem('bag', JSON.stringify(myBag));
+          window.alert('Uspešno ste dodali ' + b.title + ' u korpu!');
           return;
         }
       }
@@ -102,6 +109,7 @@ export class WishlistComponent implements OnInit {
       myBag.price = totalPrice;
     } else {
       //prva stvar se dodaje u korpu
+      let priceFloat = parseFloat(this.convertToFloat(b.price));
       const bag = {
         books : [{
           title: b.title,
@@ -110,12 +118,11 @@ export class WishlistComponent implements OnInit {
           quantity: 1,
           author: b.author
         }],
-        price: b.price
+        price: priceFloat
       };
       myBag = bag;
     }
     localStorage.setItem('bag', JSON.stringify(myBag));
     window.alert('Uspešno ste dodali ' + b.title + ' u korpu!');
   }
-
 }

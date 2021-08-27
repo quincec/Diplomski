@@ -106,6 +106,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  getStringPrice(p: any): any {
+    let price = p.replace(/\s+/g, '');
+    return price;
+  }
+
   convertToFloat(numToConvert: String): any {
     let num = new String(numToConvert);
     if (num.includes(".")) {
@@ -115,23 +120,26 @@ export class HomeComponent implements OnInit {
         num += temp[j];
       }
     }
-    num.replace(",", ".");
-    let retValue = num.toString();
-    return parseFloat(retValue);
+    let temp = num.split(",");
+    let retValue = temp[0] + "." + temp[1];
+    let floatValue = parseFloat(retValue);
+    return floatValue;
   }
 
   calculateTotalPrice(myBag, b) : any {
-    let totalPriceFloat = this.convertToFloat(myBag.price);
+    let totalPriceFloat = parseFloat(myBag.price);
     let bookPriceFloat = this.convertToFloat(b.price);
     let totalPrice = 0;
-    totalPrice += bookPriceFloat + totalPriceFloat;
-    return myBag.price = totalPrice.toString();
+    totalPrice = bookPriceFloat + totalPriceFloat;
+    return myBag.price = totalPrice.toFixed(2);
   }
 
   addToBag(b: any) {
     let myBag = JSON.parse(localStorage.getItem('bag'));
+    let pr = b.price;
+    b.price = this.getStringPrice(pr);
     if (myBag != null) {
-      localStorage.removeItem('myBag');
+      localStorage.removeItem('bag');
       let books = myBag.books;
       for (let i = 0; i < books.length; i++) {
         if (books[i].title == b.title && books[i].link == b.link) {
@@ -156,6 +164,7 @@ export class HomeComponent implements OnInit {
       myBag.price = totalPrice;
     } else {
       //prva stvar se dodaje u korpu
+      let priceFloat = parseFloat(this.convertToFloat(b.price));
       const bag = {
         books : [{
           title: b.title,
@@ -164,7 +173,7 @@ export class HomeComponent implements OnInit {
           quantity: 1,
           author: b.author
         }],
-        price: b.price
+        price: priceFloat
       };
       myBag = bag;
     }
