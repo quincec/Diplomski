@@ -42,11 +42,11 @@ export class WishlistComponent implements OnInit {
     this.userService.removeFromWishlist(w.link, w.title, this.currentUser._id).subscribe((res: Wishlist) => {
       let list = this.myWishlist;
       for (let i = 0; i < list.length; i++) {
-        if (list[i]._id == w._id) {
+        if (list[i]._id == res._id) {
           list.splice(i, 1);
         }
       }
-      this.wishlistExists = false;
+      this.wishlistExists = (list.length != 0);
       this.myWishlist = list;
     })
   }
