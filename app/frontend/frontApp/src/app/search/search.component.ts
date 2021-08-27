@@ -167,7 +167,7 @@ export class SearchComponent implements OnInit {
       myBag.price = totalPrice;
     } else {
       //prva stvar se dodaje u korpu
-      let priceFloat = parseFloat(this.convertToFloat(b.price));
+      let priceFloat = parseFloat(this.convertToFloat(b.price)).toFixed(2);
       const bag = {
         books : [{
           title: b.title,
