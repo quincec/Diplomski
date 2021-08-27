@@ -1,21 +1,11 @@
-<nav class="navbar navbar-expand-sm bg-warning">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto nav-fill w-100">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/requests'>Zahtevi za registraciju</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-user"></i>
-                        <span> {{currentUser.name}}</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a routerLink='' (click)='logout()' class="dropdown-item">Odjavi se</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div class="topnav" id="myTopnav">
+    <a class="active" routerLink='/requests'>Zahtevi za registraciju<span class="sr-only">(current)</span></a>
+    <a routerLink='' (click)='logout()' style="float: right;">Odjavi se</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+</div>
+
+
+
 

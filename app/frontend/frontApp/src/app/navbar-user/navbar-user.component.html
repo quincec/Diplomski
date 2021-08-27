@@ -1,41 +1,25 @@
-<nav class="navbar navbar-expand-sm bg-warning">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto nav-fill w-100">
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink='/home'>Početna<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/wishlist'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                        Wish list
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Pretraži" aria-label="Search" [(ngModel)]='searchBy' type='text' name='searchBy'>
-                        <button class="btn btn-dark" (click)='search()'><i class="fa fa-search"></i></button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/bag'>Korpa</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-user"></i>
-                        <span> {{currentUser.name}}</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a routerLink='/profile' class="dropdown-item">Moj profil</a>
-                        <a routerLink='/orders' class="dropdown-item">Moje porudžbine</a>
-                        <a routerLink='/changePassword' class="dropdown-item">Promeni lozinku</a>
-                        <div class="dropdown-divider"></div>
-                        <a routerLink='' (click)='logout()' class="dropdown-item">Odjavi se</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<div class="topnav" id="myTopnav">
+    <a class="active" routerLink='/home'>Početna<span class="sr-only">(current)</span></a>
+    <a routerLink='/wishlist'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+        </svg>
+        Wish list
+    </a>
+    <a routerLink='/bag'>Korpa</a>
+    <a routerLink='/profile'>Moj profil</a>
+    <a routerLink='/orders'>Moje porudžbine</a>
+    <a routerLink='/changePassword'>Promeni lozinku</a>
+    <a routerLink='' (click)='logout()' style="float: right;">Odjavi se</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <form class="d-flex" id="searchBar">
+            <input class="form-control me-2" type="search" placeholder="Pretraži" aria-label="Search" [(ngModel)]='searchBy' type='text' name='searchBy'>
+            <button class="btn btn-dark" (click)='search()'><i class="fa fa-search"></i></button>
+        </form>
     </div>
-</nav>
+</div>
