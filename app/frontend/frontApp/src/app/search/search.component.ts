@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit {
   }
 
   addToWishlist(b: any) {
-    this.userService.addToWishlist(b._id, b.author, b.bookstore, b.imgSrc, b.link, b.price, b.title, this.currentUser._id).subscribe((res: Wishlist) => {
+    this.userService.addToWishlist(b._id, b.author, b.bookstore, b.imgSrc, b.link, b.price, b.title, this.currentUser._id, b.multipleExist).subscribe((res: Wishlist) => {
       let books = this.books;
       for (let i = 0; i < books.length; i++) {
         if (books[i]._id == b._id) {

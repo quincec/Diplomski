@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-mongoose.set('debug', true);
 
 let bookModel = new Schema ({
     title: {
@@ -21,6 +20,9 @@ let bookModel = new Schema ({
     },
     bookstore: {
         type: String
+    },
+    multipleExist: {
+        type: Number
     }
 });
 

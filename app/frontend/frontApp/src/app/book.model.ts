@@ -6,4 +6,5 @@ export interface Book {
     author: string,
     price: string,
     bookstore: string,
+    multipleExist: number
 }

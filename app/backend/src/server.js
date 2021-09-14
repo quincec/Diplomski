@@ -48,112 +48,149 @@ db.once('open', function () {
 
 function readFromVulkanPage(currentPage) {
   let url = URLvulkan + "/page-" + currentPage;
-  requestVulkan(url, function (err, res, body) {
-    if (err) {
-      console.log(err, "error occured while hitting URL " + url);
-    } else {
+  return new Promise(function (resolve, reject) {
+    requestVulkan(url, function (err, res, body) {
+      if (err) {
+        console.log(err, "error occured while hitting URL " + url);
+        reject("error occured while hitting URL " + url);
+      } else {
+        let $ = cheerio.load(body);  //loading of complete HTML body
+        let booksPromises = [];
+        $('div.wrapper-gridalt-view > div.row > div.item-data').each(function (index) {
+          const link = $(this).find('div.img-wrapper > a').attr('href');
+          const imgSrc = "https://www.knjizare-vulkan.rs" + $(this).find('div.img-wrapper > a > img').attr('src');
+          const title = ($(this).find('div.text-wrapper > div.title > a').attr('title')).toUpperCase();
+          const author = $(this).find('div.text-wrapper > div.atributs-wrapper > div.item > span.value > a').attr('title');
+          //const description = $(this).find('div.text-wrapper > div.product-description').text();
+          let priceLong = $(this).find('div.text-wrapper > div.prices-wrapper > div.current-price').text();
+          let price = "";
 
-      let $ = cheerio.load(body);  //loading of complete HTML body
-
-      $('div.wrapper-gridalt-view > div.row > div.item-data').each(function (index) {
-        const link = $(this).find('div.img-wrapper > a').attr('href');
-        const imgSrc = "https://www.knjizare-vulkan.rs" + $(this).find('div.img-wrapper > a > img').attr('src');
-        const title = ($(this).find('div.text-wrapper > div.title > a').attr('title')).toUpperCase();
-        const author = $(this).find('div.text-wrapper > div.atributs-wrapper > div.item > span.value > a').attr('title');
-        //const description = $(this).find('div.text-wrapper > div.product-description').text();
-        let priceLong = $(this).find('div.text-wrapper > div.prices-wrapper > div.current-price').text();
-        let price = "";
-
-        for (let i = 0; i < priceLong.length; i++) {
-          if (priceLong.charAt(i) >= 0 || priceLong.charAt(i) <= 9) {
-            price += priceLong.charAt(i);
-            continue;
+          for (let i = 0; i < priceLong.length; i++) {
+            if (priceLong.charAt(i) >= 0 || priceLong.charAt(i) <= 9) {
+              price += priceLong.charAt(i);
+              continue;
+            }
+            if (price.length > 0 && (priceLong.charAt(i) == ',' || priceLong.charAt(i) == '.')) {
+              price += priceLong.charAt(i);
+              continue;
+            }
+            if (price.length > 0) {
+              break;
+            }
           }
-          if (price.length > 0 && (priceLong.charAt(i) == ',' || priceLong.charAt(i) == '.')) {
-            price += priceLong.charAt(i);
-            continue;
-          }
-          if (price.length > 0) {
-            break;
-          }
-        }
-
-        let book = new BookModel({
-          link: link,
-          imgSrc: imgSrc,
-          title: title,
-          author: author,
-          price: price,
-          bookstore: "Vulkan"
+          let book = new BookModel({
+            link: link,
+            imgSrc: imgSrc,
+            title: title,
+            author: author,
+            price: price,
+            bookstore: "Vulkan",
+            multipleExist: 0
+          });
+          booksPromises.push(book.save());
         });
-        book.save();
-      });
-    }
-  });
+        Promise.all(booksPromises).then(() => resolve());
+      }
+    });
+  })
 }
 
 function readFromDelfiPage(currentPage) {
   let url = URLdelfi + "&page=" + currentPage;
-  requestDelfi(url, function (err, res, body) {
-    if (err) {
-      console.log(err, "error occured while hitting URL " + url);
-    } else {
-      let $ = cheerio.load(body);  //loading of complete HTML body
+  return new Promise(function (resolve, reject) {
+    requestDelfi(url, function (err, res, body) {
+      if (err) {
+        console.log(err, "error occured while hitting URL " + url);
+        reject();
+      } else {
+        let $ = cheerio.load(body);  //loading of complete HTML body
+        let booksPromises = [];
+        $('div.content-holder > div.col > div.listing-item').each(function (index) {
+          const link = $(this).find('div.overlay-container > a').attr('href');
+          const imgSrc = $(this).find('div.overlay-container > a > img').attr('src');
+          const title = ($(this).find('div.body > div.carousel-book-info > h3 > a').attr('title')).toUpperCase();
+          const author = $(this).find('div.body > div.carousel-book-info > p').text();
+          //const description = $(this).find('div.text-wrapper > div.product-description').text();
+          let priceLong = $(this).find('div.body > div.elements-list > span.price').text();
+          let price = "";
 
-      $('div.content-holder > div.col > div.listing-item').each(function (index) {
-        const link = $(this).find('div.overlay-container > a').attr('href');
-        const imgSrc = $(this).find('div.overlay-container > a > img').attr('src');
-        const title = ($(this).find('div.body > div.carousel-book-info > h3 > a').attr('title')).toUpperCase();
-        const author = $(this).find('div.body > div.carousel-book-info > p').text();
-        //const description = $(this).find('div.text-wrapper > div.product-description').text();
-        let priceLong = $(this).find('div.body > div.elements-list > span.price').text();
-        let price = "";
+          for (let i = 0; i < priceLong.length; i++) {
+            if (priceLong.charAt(i) >= 0 || priceLong.charAt(i) <= 9) {
+              price += priceLong.charAt(i);
+              continue;
+            }
+            if (price.length > 0 && (priceLong.charAt(i) == ',' || priceLong.charAt(i) == '.')) {
+              price += priceLong.charAt(i);
+              continue;
+            }
+            if (price.length > 0) {
+              break;
+            }
+          }
 
-        for (let i = 0; i < priceLong.length; i++) {
-          if (priceLong.charAt(i) >= 0 || priceLong.charAt(i) <= 9) {
-            price += priceLong.charAt(i);
-            continue;
-          }
-          if (price.length > 0 && (priceLong.charAt(i) == ',' || priceLong.charAt(i) == '.')) {
-            price += priceLong.charAt(i);
-            continue;
-          }
-          if (price.length > 0) {
-            break;
-          }
-        }
-
-        let book = new BookModel({
-          link: link,
-          imgSrc: imgSrc,
-          title: title,
-          author: author,
-          price: price,
-          bookstore: "Delfi"
+          let book = new BookModel({
+            link: link,
+            imgSrc: imgSrc,
+            title: title,
+            author: author,
+            price: price,
+            bookstore: "Delfi",
+            multipleExist: 0
+          });
+          booksPromises.push(book.save())
         });
-        book.save();
-      });
-    }
-  });
+        Promise.all(booksPromises).then(() => resolve());
+      }
+    });
+  })
 }
 
-requestVulkan(URLvulkan, async function (err, res, body) {
-  if (err) {
-    console.log(err, "error occured while hitting URL");
-  } else {
-    await BookModel.deleteMany({});
-
-    let $ = cheerio.load(body);  //loading of complete HTML body
-
-    let numOfPages = parseInt($('ul.pagination > li.number > a[rel="last"]').text());
-
-    for (let i = 0; i < numOfPages; i++) {
-      readFromVulkanPage(i);
+async function matchBookDuplicates() {
+  const books = await BookModel.find();
+  for (let i = 0; i < books.length; i++) {
+    const regexTitle = new RegExp(books[i].title, 'i')
+    const regexAuthor = new RegExp(books[i].author, 'i');
+    const existingBooks = await BookModel.find({ 'title': { $regex: regexTitle }, 'author': { $regex: regexAuthor }, 'link': { $ne: books[i].link } });
+    if (existingBooks[0]) {
+      for (let j = 0; j < existingBooks.length; j++) {
+        if (existingBooks[j].multipleExist == 0) {
+          await BookModel.findOneAndUpdate({ 'link': existingBooks[j].link }, { 'multipleExist': 1 });
+        }
+      }
+      await BookModel.findOneAndUpdate({ 'link': books[i].link }, { 'multipleExist': 1 });
     }
+  }
+}
 
+async function fetchBooks() {
+  let allRequestsPromises = [];
+  let waitForPromisesPush = [];
+
+  await BookModel.deleteMany({});
+
+  waitForPromisesPush.push(new Promise(function (resolve, reject) {
+    requestVulkan(URLvulkan, function (err, res, body) {
+      if (err) {
+        console.log(err, "error occured while hitting URL");
+        reject();
+      } else {
+        let $ = cheerio.load(body);  //loading of complete HTML body
+
+        let numOfPages = parseInt($('ul.pagination > li.number > a[rel="last"]').text());
+
+        for (let i = 0; i < numOfPages; i++) {
+          allRequestsPromises.push(readFromVulkanPage(i));
+        }
+        resolve();
+      }
+    });
+  }));
+
+  waitForPromisesPush.push(new Promise(function (resolve, reject) {
     requestDelfi(URLdelfi, function (err, res, body) {
       if (err) {
         console.log(err, "error occured while hitting URL");
+        reject();
       } else {
         let $ = cheerio.load(body);  //loading of complete HTML body
 
@@ -166,14 +203,24 @@ requestVulkan(URLvulkan, async function (err, res, body) {
         lastPageNumber = parseInt(lastPageNumber);
 
         for (let i = 1; i <= lastPageNumber; i++) {
-          readFromDelfiPage(i);
+          allRequestsPromises.push(readFromDelfiPage(i));
         }
-        console.log("Fetching finished");
+        resolve();
       }
     });
-  }
-});
+  }));
+  
+  await Promise.all(waitForPromisesPush);
+  return Promise.all(allRequestsPromises);
+}
 
+// fetchBooks();
+
+fetchBooks().then(async () => {
+  console.log("Fetching completed!");
+  await matchBookDuplicates();
+  console.log("matchBookDuplicates() completed!");
+})
 
 app.post('/getUserByUsernamePassword', async (req, res) => {
   const users = await UserModel.find({ 'username': req.body.username });
@@ -316,7 +363,8 @@ app.post('/addToWishlist', async (req, res, next) => {
     price: req.body.price,
     bookStore: req.body.bookstore,
     link: req.body.link,
-    imgSrc: req.body.imgSrc
+    imgSrc: req.body.imgSrc,
+    multipleExist: req.body.multipleExist,
   });
 
   request.save();

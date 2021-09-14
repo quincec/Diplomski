@@ -8,4 +8,5 @@ export interface Wishlist {
     author: string,
     price: string,
     bookstore: string,
+    multipleExist: number,
 }

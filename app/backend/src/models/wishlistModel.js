@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-mongoose.set('debug', true);
 
 let wishlistModel = new Schema ({
     bookId: {
@@ -27,6 +26,9 @@ let wishlistModel = new Schema ({
     },
     bookstore: {
         type: String
+    },
+    multipleExist: {
+        type: Number
     }
 });
 

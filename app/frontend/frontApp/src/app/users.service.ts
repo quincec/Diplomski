@@ -91,7 +91,7 @@ export class UsersService {
     return this.http.get(`${this.uri}/getAllBooks`);
   }
 
-  addToWishlist(bookId, author, bookstore, imgSrc, link, price, title, userId) {
+  addToWishlist(bookId, author, bookstore, imgSrc, link, price, title, userId, multipleExist) {
     const data = {
       bookId: bookId,
       userId: userId, 
@@ -100,7 +100,8 @@ export class UsersService {
       imgSrc: imgSrc,
       link: link,
       price: price,
-      title: title
+      title: title,
+      multipleExist: multipleExist
     };
     return this.http.post(`${this.uri}/addToWishlist`, data);
   }

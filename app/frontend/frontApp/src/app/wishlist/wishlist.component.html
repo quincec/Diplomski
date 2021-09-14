@@ -5,6 +5,9 @@
     <div class='row' *ngIf='wishlistExists'>
         <div class='col-6' *ngFor='let w of myWishlist'>
             <div class='card text-center'>
+                <span *ngIf='w.multipleExist==1'>
+                    <b><i>Postoji više ponuda ove knjige</i></b>
+                </span>
                 <span>
                     <button type="button" class="btn btn-danger" id="wishlist" (click)="removeFromWishlist(w)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
